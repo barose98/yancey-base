@@ -1,6 +1,6 @@
 #include "SDLGame.h"
 #include "debug_config.h"
-#include "colors_config.h"
+
 #include <iostream>
 #include <chrono>
 //#include 
@@ -9,11 +9,14 @@
 //#include "GL/glx.h"
 
 
-SDLGame::SDLGame(const char* title, int w, int h){
+SDLGame::SDLGame(const char* title, int w, int h, uint32_t interval){
   log_func;
   this->title = title;
   this->wind_w = w;
   this->wind_h = h;
+  this->frame_timer = new Yancey_Timer<SDL_TimerID,SDL_TimerCallback>(NULL, SDLGame::frame_expired, interval, this);
+
+  SDLGame::start_timer( this->frame_timer );
 }
 SDLGame::SDLGame(){
 
@@ -21,10 +24,36 @@ SDLGame::SDLGame(){
 SDLGame::~SDLGame()
 {
     log_func;
+    delete this->frame_timer;
 }
+
+bool SDLGame::start_timer( Yancey_Timer<SDL_TimerID,SDL_TimerCallback>* ft)
+{
+  ft->id = SDL_AddTimer(ft->interval, ft->callback, ft->userdata);
+  return true;
+}
+
+bool SDLGame::restart_timer( Yancey_Timer<SDL_TimerID,SDL_TimerCallback>* ft)
+{
+  SDL_RemoveTimer(ft->id);
+  SDLGame::start_timer(ft);
+  return true;
+}
+
+uint32_t SDLGame::frame_expired(uint32_t interval, void *param)
+{
+  if(param)
+  {
+      SDLGame* th = (SDLGame*)param;
+      th->frame_timer->ready  = true;
+      return th->frame_timer->interval;
+  }
+  return interval;
+}
+  
 void SDLGame::kill()
 {
-    log_i<< "Killing..." << std::endl ;
+     log_func;
 // Quit
     SDL_GL_DeleteContext(this->gl_context);  
     SDL_DestroyWindow( this->window );
@@ -32,11 +61,12 @@ void SDLGame::kill()
     SDL_Quit();
 }
 
-bool SDLGame::init()
+bool SDLGame::init(uint32_t flags)
 {
 
+
     log_i <<"Initializing OPENGL SDL Window " <<  std::endl ;
-    int val = SDL_Init(SDL_INIT_VIDEO);
+    int val = SDL_Init(flags);
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     //    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -46,7 +76,7 @@ bool SDLGame::init()
 	  log_i <<"error:" << SDL_GetError() << std::endl ;
        return false;
        }
-    this->window = SDL_CreateWindow(  this->title, SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,this->wind_w, this->wind_h, SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+    this->window = SDL_CreateWindow(  this->title, SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,this->wind_w, this->wind_h, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
     if( !this->window ){
 	  log_i << "error:" << SDL_GetError() << std::endl ;
 	  return false;
@@ -57,13 +87,9 @@ bool SDLGame::init()
     /* Creating OpenGL Context */
     this->gl_context = SDL_GL_CreateContext(window);
     
-    log_i << "VERSION: " << glGetString(GL_VERSION) << std::endl ;
+    //  log_i << "VERSION: " << glGetString(GL_VERSION) << std::endl ;
+     this->set_render_color( YANCEYCOLOR_Red );
 
-    //    glewExperimental = GL_TRUE;
-    //        GLenum err = glewInit();
-    // glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
-    // glClear(GL_COLOR_BUFFER_BIT);
-    SDL_SetRenderDrawColor(this->renderer, YANCEYCOLOR_Blue_r, YANCEYCOLOR_Blue_g, YANCEYCOLOR_Blue_b, 255);
     SDL_RenderClear(this->renderer);
     SDL_RenderPresent(this->renderer);
 
@@ -97,11 +123,7 @@ bool SDLGame::loop()
 bool SDLGame::run()
 {
   log_func;
-  if( !this->init())
-    {
-      this->kill();
-      return false;
-    }
+
   if( !this->loop())
     {
       this->kill();
@@ -128,25 +150,24 @@ bool SDLGame::handleEvents()
 
 bool SDLGame::update(){
    SDL_GL_SwapWindow(window);
-
    SDL_Delay(50);
   return true;
 }
 
-bool SDLGame::draw_sdl(std::vector<Yancey_Vector> points )
+bool SDLGame::draw(std::vector<Yancey_Vector> points )
 {
+  //  log_i<< points.size() <<std::endl;
   std::vector<SDL_Point> newp = {};
   int i =0;
   for( Yancey_Vector yp : points ){
-    newp.push_back( { MKS2PX(yp.x), MKS2PX(yp.y) } );
-    //    log_i<< yp.x <<','<< yp.y <<" ";
+    //    Yancey_Vector n = MKS2PX(yp ,  this->wind_size_mks);
+    //    log_line;
+    newp.push_back(  { round(yp.x),round(yp.y) } );
+    // log_i<<  this->wind_size_mks.x <<','<<  this->wind_size_mks.y <<' ';
+    // log_i<< yp.x <<','<< yp.y <<std::endl;
     i++;
   }
-  //  log_i<<"### ";
-  //  for( SDL_Point sp : newp ){
-  //   log_i<< sp.x <<','<< sp.y <<" ";
-  //  }
-  //  log_i <<std::endl;
+
     SDL_RenderDrawLines( this->renderer, newp.data(), newp.size()  );
     return SDL_TRUE;
 }
@@ -154,6 +175,12 @@ bool SDLGame::draw_sdl(std::vector<Yancey_Vector> points )
 void SDLGame::getWindowSize()
 {
     SDL_GetWindowSize(this->window,&this->wind_w,&this->wind_h);
-    this->wind_size_mks = { PX2MKS(this->wind_w) ,PX2MKS(this->wind_h)} ;
+    this->wind_size_mks = PX2MKS(this->wind_w , this->wind_h)  ;
     //log_i<< this->wind_w_mks <<','<< this->wind_h_mks << std::endl;
 }
+
+  void SDLGame::set_render_color(Yancey_Color color)
+  {
+    this->render_color = color;
+    SDL_SetRenderDrawColor(this->renderer, color.r, color.g, color.b, color.a );
+  }

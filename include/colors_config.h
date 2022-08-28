@@ -1,152 +1,58 @@
+#pragma once
+struct Yancey_Color{
+uint8_t r;
+uint8_t g;
+uint8_t b;
+uint8_t a = 0xff;
+};
 
-#define YANCEYCOLOR_Red_r 0xFF
-#define YANCEYCOLOR_Maroon_r 0x80
-#define YANCEYCOLOR_Aquamarine_r 0x7F
-#define YANCEYCOLOR_Chartreuse_r 0x7F
-#define YANCEYCOLOR_LawnGreen_r 0x7C
-#define YANCEYCOLOR_MediumSlateBlue_r 0x7B
-#define YANCEYCOLOR_LightSlateGray_r 0x77
-#define YANCEYCOLOR_SlateGray_r 0x70
-#define YANCEYCOLOR_OliveDrab_r 0x6B
-#define YANCEYCOLOR_SlateBlue_r 0x6A
-#define YANCEYCOLOR_DimGray_r 0x69
-#define YANCEYCOLOR_MediumAquamarine_r 0x66
-#define YANCEYCOLOR_CornflowerBlue_r 0x64
-#define YANCEYCOLOR_CadetBlue_r 0x5F
-#define YANCEYCOLOR_DarkOliveGreen_r 0x55
-#define YANCEYCOLOR_Indigo_r 0x4B
-#define YANCEYCOLOR_MediumTurquoise_r 0x48
-#define YANCEYCOLOR_DarkSlateBlue_r 0x48
-#define YANCEYCOLOR_SteelBlue_r 0x46
-#define YANCEYCOLOR_RoyalBlue_r 0x41
-#define YANCEYCOLOR_Turquoise_r 0x40
-#define YANCEYCOLOR_MediumSeaGreen_r 0x3C
-#define YANCEYCOLOR_LimeGreen_r 0x32
-#define YANCEYCOLOR_DarkSlateGray_r 0x2F
-#define YANCEYCOLOR_SeaGreen_r 0x2E
-#define YANCEYCOLOR_ForestGreen_r 0x22
-#define YANCEYCOLOR_LightSeaGreen_r 0x20
-#define YANCEYCOLOR_DodgerBlue_r 0x1E
-#define YANCEYCOLOR_MidnightBlue_r 0x19
-#define YANCEYCOLOR_Aqua_r 0x00
-#define YANCEYCOLOR_Cyan_r 0x00
-#define YANCEYCOLOR_SpringGreen_r 0x00
-#define YANCEYCOLOR_Lime_r 0x00
-#define YANCEYCOLOR_MediumSpringGreen_r 0x00
-#define YANCEYCOLOR_DarkTurquoise_r 0x00
-#define YANCEYCOLOR_DeepSkyBlue_r 0x00
-#define YANCEYCOLOR_DarkCyan_r 0x00
-#define YANCEYCOLOR_Teal_r 0x00
-#define YANCEYCOLOR_Green_r 0x00
-#define YANCEYCOLOR_DarkGreen_r 0x00
-#define YANCEYCOLOR_Blue_r 0x00
-#define YANCEYCOLOR_MediumBlue_r 0x00
-#define YANCEYCOLOR_DarkBlue_r 0x00
-#define YANCEYCOLOR_Navy_r 0x00
-#define YANCEYCOLOR_Orange_r 0xFF
-#define YANCEYCOLOR_Purple_r 0x66
-#define YANCEYCOLOR_Black_r 0x00
-#define YANCEYCOLOR_White_r 0xFF
-#define YANCEYCOLOR_Transparent_r 0x00
-
-
-#define YANCEYCOLOR_Red_g 0x00
-#define YANCEYCOLOR_Maroon_g 0x00
-#define YANCEYCOLOR_Aquamarine_g 0xFF
-#define YANCEYCOLOR_Chartreuse_g 0xFF
-#define YANCEYCOLOR_LawnGreen_g 0xFC
-#define YANCEYCOLOR_MediumSlateBlue_g 0x68
-#define YANCEYCOLOR_LightSlateGray_g 0x88
-#define YANCEYCOLOR_SlateGray_g 0x80
-#define YANCEYCOLOR_OliveDrab_g 0x8E
-#define YANCEYCOLOR_SlateBlue_g 0x5A
-#define YANCEYCOLOR_DimGray_g 0x69
-#define YANCEYCOLOR_MediumAquamarine_g 0xCD
-#define YANCEYCOLOR_CornflowerBlue_g 0x95
-#define YANCEYCOLOR_CadetBlue_g 0x9E
-#define YANCEYCOLOR_DarkOliveGreen_g 0x6B
-#define YANCEYCOLOR_Indigo_g 0x00
-#define YANCEYCOLOR_MediumTurquoise_g 0xD1
-#define YANCEYCOLOR_DarkSlateBlue_g 0x3D
-#define YANCEYCOLOR_SteelBlue_g 0x82
-#define YANCEYCOLOR_RoyalBlue_g 0x69
-#define YANCEYCOLOR_Turquoise_g 0xE0
-#define YANCEYCOLOR_MediumSeaGreen_g 0xB3
-#define YANCEYCOLOR_LimeGreen_g 0xCD
-#define YANCEYCOLOR_DarkSlateGray_g 0x4F
-#define YANCEYCOLOR_SeaGreen_g 0x8B
-#define YANCEYCOLOR_ForestGreen_g 0x8B
-#define YANCEYCOLOR_LightSeaGreen_g 0xB2
-#define YANCEYCOLOR_DodgerBlue_g 0x90
-#define YANCEYCOLOR_MidnightBlue_g 0x19
-#define YANCEYCOLOR_Aqua_g 0xFF
-#define YANCEYCOLOR_Cyan_g 0xFF
-#define YANCEYCOLOR_SpringGreen_g 0xFF
-#define YANCEYCOLOR_Lime_g 0xFF
-#define YANCEYCOLOR_MediumSpringGreen_g 0xFA
-#define YANCEYCOLOR_DarkTurquoise_g 0xCE
-#define YANCEYCOLOR_DeepSkyBlue_g 0xBF
-#define YANCEYCOLOR_DarkCyan_g 0x8B
-#define YANCEYCOLOR_Teal_g 0x80
-#define YANCEYCOLOR_Green_g 0x80
-#define YANCEYCOLOR_DarkGreen_g 0x40
-#define YANCEYCOLOR_Blue_g 0x00
-#define YANCEYCOLOR_MediumBlue_g 0x00
-#define YANCEYCOLOR_DarkBlue_g 0x00
-#define YANCEYCOLOR_Navy_g 0x00
-#define YANCEYCOLOR_Orange_g 0x8C
-#define YANCEYCOLOR_Purple_g 0x00
-#define YANCEYCOLOR_Black_g 0x00
-#define YANCEYCOLOR_White_g 0xFF
-#define YANCEYCOLOR_Transparent_g 0x00
-
-
-#define YANCEYCOLOR_Red_b 0x00
-#define YANCEYCOLOR_Maroon_b 0x00
-#define YANCEYCOLOR_Aquamarine_b 0xD4
-#define YANCEYCOLOR_Chartreuse_b 0x00
-#define YANCEYCOLOR_LawnGreen_b 0x00
-#define YANCEYCOLOR_MediumSlateBlue_b 0xEE
-#define YANCEYCOLOR_LightSlateGray_b 0x99
-#define YANCEYCOLOR_SlateGray_b 0x90
-#define YANCEYCOLOR_OliveDrab_b 0x23
-#define YANCEYCOLOR_SlateBlue_b 0xCD
-#define YANCEYCOLOR_DimGray_b 0x69
-#define YANCEYCOLOR_MediumAquamarine_b 0xAA
-#define YANCEYCOLOR_CornflowerBlue_b 0xED
-#define YANCEYCOLOR_CadetBlue_b 0xA0
-#define YANCEYCOLOR_DarkOliveGreen_b 0x2F
-#define YANCEYCOLOR_Indigo_b 0x82
-#define YANCEYCOLOR_MediumTurquoise_b 0xCC
-#define YANCEYCOLOR_DarkSlateBlue_b 0x8B
-#define YANCEYCOLOR_SteelBlue_b 0xB4
-#define YANCEYCOLOR_RoyalBlue_b 0xE1
-#define YANCEYCOLOR_Turquoise_b 0xD0
-#define YANCEYCOLOR_MediumSeaGreen_b 0x71
-#define YANCEYCOLOR_LimeGreen_b 0x32
-#define YANCEYCOLOR_DarkSlateGray_b 0x4F
-#define YANCEYCOLOR_SeaGreen_b 0x57
-#define YANCEYCOLOR_ForestGreen_b 0x22
-#define YANCEYCOLOR_LightSeaGreen_b 0xAA
-#define YANCEYCOLOR_DodgerBlue_b 0xFF
-#define YANCEYCOLOR_MidnightBlue_b 0x70
-#define YANCEYCOLOR_Aqua_b 0xFF
-#define YANCEYCOLOR_Cyan_b 0xFF
-#define YANCEYCOLOR_SpringGreen_b 0x7F
-#define YANCEYCOLOR_Lime_b 0x00
-#define YANCEYCOLOR_MediumSpringGreen_b 0x9A
-#define YANCEYCOLOR_DarkTurquoise_b 0xD1
-#define YANCEYCOLOR_DeepSkyBlue_b 0xFF
-#define YANCEYCOLOR_DarkCyan_b 0x8B
-#define YANCEYCOLOR_Teal_b 0x80
-#define YANCEYCOLOR_Green_b 0x00
-#define YANCEYCOLOR_DarkGreen_b 0x00
-#define YANCEYCOLOR_Blue_b 0xFF
-#define YANCEYCOLOR_MediumBlue_b 0xCD
-#define YANCEYCOLOR_DarkBlue_b 0x8B
-#define YANCEYCOLOR_Navy_b 0x22
-#define YANCEYCOLOR_Orange_b 0x00
-#define YANCEYCOLOR_Purple_b 0x66
-#define YANCEYCOLOR_Black_b 0x00
-#define YANCEYCOLOR_White_b 0xFF
-#define YANCEYCOLOR_Transparent_b 0x00
+#define YANCEYCOLOR_Red  { 0xFF, 0x00, 0x00 }
+#define YANCEYCOLOR_Maroon  { 0x80, 0x00, 0x00 }
+#define YANCEYCOLOR_Aquamarine  { 0x7F, 0xFF, 0xD4 }
+#define YANCEYCOLOR_Chartreuse  { 0x7F, 0xFF, 0x00 }
+#define YANCEYCOLOR_Yellow  { 0xFF, 0xFF, 0x00 }
+#define YANCEYCOLOR_LawnGreen  { 0x7C, 0xFC, 0x00 }
+#define YANCEYCOLOR_MediumSlateBlue  { 0x7B, 0x68, 0xEE }
+#define YANCEYCOLOR_LightSlateGray  { 0x77, 0x88, 0x99 }
+#define YANCEYCOLOR_SlateGray  { 0x70, 0x80, 0x90 }
+#define YANCEYCOLOR_OliveDrab  { 0x6B, 0x8E, 0x23 }
+#define YANCEYCOLOR_SlateBlue  { 0x6A, 0x5A, 0xCD }
+#define YANCEYCOLOR_DimGray  { 0x69, 0x69, 0x69 }
+#define YANCEYCOLOR_MediumAquamarine  { 0x66, 0xCD, 0xAA }
+#define YANCEYCOLOR_CornflowerBlue  { 0x64, 0x95, 0xED }
+#define YANCEYCOLOR_CadetBlue  { 0x5F, 0x9E, 0xA0 }
+#define YANCEYCOLOR_DarkOliveGreen  { 0x55, 0x6B, 0x2F }
+#define YANCEYCOLOR_Indigo  { 0x4B, 0x00, 0x82 }
+#define YANCEYCOLOR_MediumTurquoise  { 0x48, 0xD1, 0xCC }
+#define YANCEYCOLOR_DarkSlateBlue  { 0x48, 0x3D, 0x8B }
+#define YANCEYCOLOR_SteelBlue  { 0x46, 0x82, 0xB4 }
+#define YANCEYCOLOR_RoyalBlue  { 0x41, 0x69, 0xE1 }
+#define YANCEYCOLOR_Turquoise  { 0x40, 0xE0, 0xD0 }
+#define YANCEYCOLOR_MediumSeaGreen  { 0x3C, 0xB3, 0x71 }
+#define YANCEYCOLOR_LimeGreen  { 0x32, 0xCD, 0x32 }
+#define YANCEYCOLOR_DarkSlateGray  { 0x2F, 0x4F, 0x4F }
+#define YANCEYCOLOR_SeaGreen  { 0x2E, 0x8B, 0x57 }
+#define YANCEYCOLOR_ForestGreen  { 0x22, 0x8B, 0x22 }
+#define YANCEYCOLOR_LightSeaGreen  { 0x20, 0xB2, 0xAA }
+#define YANCEYCOLOR_DodgerBlue  { 0x1E, 0x90, 0xFF }
+#define YANCEYCOLOR_MidnightBlue  { 0x19, 0x19, 0x70 }
+#define YANCEYCOLOR_Aqua  { 0x00, 0xFF, 0xFF }
+#define YANCEYCOLOR_Cyan  { 0x00, 0xFF, 0xFF }
+#define YANCEYCOLOR_SpringGreen  { 0x00, 0xFF, 0x7F }
+#define YANCEYCOLOR_Lime  { 0x00, 0xFF, 0x00 }
+#define YANCEYCOLOR_MediumSpringGreen  { 0x00, 0xFA, 0x9A }
+#define YANCEYCOLOR_DarkTurquoise  { 0x00, 0xCE, 0xD1 }
+#define YANCEYCOLOR_DeepSkyBlue  { 0x00, 0xBF, 0xFF }
+#define YANCEYCOLOR_DarkCyan  { 0x00, 0x8B, 0x8B }
+#define YANCEYCOLOR_Teal  { 0x00, 0x80, 0x80 }
+#define YANCEYCOLOR_Green  { 0x00, 0x80, 0x00 }
+#define YANCEYCOLOR_DarkGreen  { 0x00, 0x40, 0x00 }
+#define YANCEYCOLOR_Blue  { 0x00, 0x00, 0xFF }
+#define YANCEYCOLOR_MediumBlue  { 0x00, 0x00, 0xCD }
+#define YANCEYCOLOR_DarkBlue  { 0x00, 0x00, 0x8B }
+#define YANCEYCOLOR_Navy  { 0x00, 0x00, 0x22 }
+#define YANCEYCOLOR_Orange  { 0xFF, 0x8C, 0x00 }
+#define YANCEYCOLOR_Purple  { 0x66, 0x00, 0x66 }
+#define YANCEYCOLOR_Black  { 0x00, 0x00, 0x00 }
+#define YANCEYCOLOR_White  { 0xFF, 0xFF, 0xFF }
+#define YANCEYCOLOR_Transparent  { 0x00, 0x00, 0x00 }

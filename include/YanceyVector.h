@@ -23,10 +23,18 @@ struct Yancey_Vector{
     return this->x * other.x + this->y * other.y;
   }
   
-  Yancey_Vector get_normal()
+  Yancey_Vector get_normal(bool cw)
   {
-    
+    if(cw) return {this->y * -1.0f , this->x};
+    return {this->y , this->x  * -1.0f};
+  }
+  Yancey_Vector get_normal_CW()
+  {    
     return {this->y * -1.0f , this->x};
+  }
+    Yancey_Vector get_normal_CCW()
+  {    
+    return {this->y , this->x  * -1.0f};
   }
   
   Yancey_Vector get_normalized()
