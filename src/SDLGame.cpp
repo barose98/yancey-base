@@ -2,7 +2,7 @@
 #include "debug_config.h"
 
 #include <iostream>
-#include <chrono>
+//#include <chrono>
 //#include 
 #include <SDL_opengl.h>
 //#include "GL/glew.h"
@@ -30,6 +30,7 @@ SDLGame::~SDLGame()
 bool SDLGame::start_timer( Yancey_Timer<SDL_TimerID,SDL_TimerCallback>* ft)
 {
   ft->id = SDL_AddTimer(ft->interval, ft->callback, ft->userdata);
+
   return true;
 }
 
@@ -50,7 +51,11 @@ uint32_t SDLGame::frame_expired(uint32_t interval, void *param)
   }
   return interval;
 }
-  
+uint32_t SDLGame::get_exec_ticks()
+{
+  return SDL_GetTicks();
+}
+
 void SDLGame::kill()
 {
      log_func;
@@ -106,15 +111,15 @@ bool SDLGame::load()
 bool SDLGame::loop()
 {
   bool contin = true;
-  
+    this->frame_timer->count = 0;
   while(contin){
-     auto start1 = std::chrono::steady_clock::now(); 
+    //auto start1 = SDL_GetTicks();// std::chrono::steady_clock::now(); 
      contin = this->update();
      if(!this->handleEvents())return false;
-     auto end1 = std::chrono::steady_clock::now();
-     auto diff1 = end1 - start1;
-     this->elapsed_ms = std::chrono::duration<double, std::milli> (diff1).count();
-     //     log_i << "No Function Loop : " <<  << " ms\n";
+     //auto end1 = SDL_GetTicks();//std::chrono::steady_clock::now();
+     //     auto diff1 = end1 - start1;
+     // this->elapsed_ms = end1 - start1;//std::chrono::duration<double, std::milli> (diff1).count();
+
   }
  return false;
  
@@ -154,8 +159,9 @@ bool SDLGame::update(){
   return true;
 }
 
-bool SDLGame::draw(std::vector<Yancey_Vector> points )
+bool SDLGame::draw_lines(std::vector<Yancey_Vector> points, Yancey_Color color )
 {
+  
   //  log_i<< points.size() <<std::endl;
   std::vector<SDL_Point> newp = {};
   int i =0;
@@ -167,7 +173,7 @@ bool SDLGame::draw(std::vector<Yancey_Vector> points )
     // log_i<< yp.x <<','<< yp.y <<std::endl;
     i++;
   }
-
+    this->set_render_color(color);
     SDL_RenderDrawLines( this->renderer, newp.data(), newp.size()  );
     return SDL_TRUE;
 }
@@ -183,4 +189,14 @@ void SDLGame::getWindowSize()
   {
     this->render_color = color;
     SDL_SetRenderDrawColor(this->renderer, color.r, color.g, color.b, color.a );
+  }
+
+  void SDLGame::render_clear(Yancey_Color color)
+  {
+    this->set_render_color(color);
+    SDL_RenderClear(this->renderer);
+  }
+void SDLGame::render_present()
+  {
+    SDL_RenderPresent(this->renderer);
   }

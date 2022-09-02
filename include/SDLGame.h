@@ -16,15 +16,20 @@ class SDLGame: public GameBase{
    bool run() override;
    bool update() override;
    bool handleEvents() override ;
+
+ 
+ protected: 
   void getWindowSize();
-  virtual  bool draw( std::vector<Yancey_Vector> points );
+  virtual  bool draw_lines( std::vector<Yancey_Vector> points, Yancey_Color color );
   
- protected:
   static uint32_t frame_expired(uint32_t interval, void *param);
   static bool start_timer( Yancey_Timer<SDL_TimerID, SDL_TimerCallback>* t );
   static bool restart_timer( Yancey_Timer<SDL_TimerID, SDL_TimerCallback>* t );
+  uint32_t get_exec_ticks();
   
   void set_render_color(Yancey_Color color);
+  void render_clear(Yancey_Color color);
+  void render_present();
   
   Yancey_Timer<SDL_TimerID,SDL_TimerCallback> *frame_timer;
   SDL_Window* window = NULL;
@@ -35,5 +40,5 @@ class SDLGame: public GameBase{
   int wind_h;
   Yancey_Vector wind_size_mks;
   Yancey_Color render_color;
-  double elapsed_ms;
+
 };

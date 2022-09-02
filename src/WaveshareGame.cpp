@@ -5,7 +5,7 @@
 #include <chrono>
 //waveshare
 //#include "EPD_Test.h"
-#include "LCD_1in3.h"
+
 
 #include "DEV_Config.h"
 #include "GUI_Paint.h"
@@ -28,17 +28,45 @@ WaveshareGame::~WaveshareGame()
 {
     log_func;
 }
+
+
+bool WaveshareGame::start_timer( Yancey_Timer<repeating_timer_t, repeating_timer_callback_t>* ft)
+{
+  add_repeating_timer_ms(ft->interval, ft->callback, ft->userdata,&ft.id);
+  return true;
+}
+
+bool WaveshareGame::restart_timer( Yancey_Timer<repeating_timer_t, repeating_timer_callback_t>* ft)
+{
+  cancel_repeating_timer(&ft->id);
+  SDLGame::start_timer(ft);
+  return true;
+}
+
+bool WaveshareGame::frame_expired(uint32_t interval, void *param)
+{
+  if(param)
+  {
+      WaveshareGame* th = (WaveshareGame*)param;
+      th->frame_timer->ready  = true;
+      return th->frame_timer->interval;
+  }
+  return interval;
+}
+
+
+
 void WaveshareGame::kill()
 {
      log_func;
 // Quit
 }
 
-bool WaveshareGame::init(uint32_t flags)
+bool WaveshareGame::init(UBYTE scan_dir)
 {
 
-    log_i <<"Initializing OPENGL Waveshare Window " <<  std::endl ;
-
+    log_i <<"Initializing Waveshare Window " <<  std::endl ;
+    LCD_1IN3_Init(scan_dir);
     log_i <<"Initialized Waveshare."<< std::endl ;
     return true;
   
@@ -93,7 +121,7 @@ bool WaveshareGame::update(){
   return true;
 }
 
-bool WaveshareGame::draw_waveshare(std::vector<Yancey_Vector> points )
+bool WaveshareGame::draw_lines(std::vector<Yancey_Vector> points, Yancey_Color color )
 {
   //  log_i<< points.size() <<std::endl;
 
@@ -113,5 +141,23 @@ bool WaveshareGame::draw_waveshare(std::vector<Yancey_Vector> points )
 
 void WaveshareGame::getWindowSize()
 {
-
+  this->wind_w=LCD_1IN3.WIDTH;
+  this->wind_h=LCD_1IN3.HEIGHT;
 }
+
+  void WaveshareGame::set_render_color(Yancey_Color color)
+  {
+    this->render_color = color;
+
+  }
+
+  void WaveshareGame::render_clear(Yancey_Color color)
+  {
+    this->set_render_color(color);
+    LCD_1IN3_Clear(UWORD Color);
+  }
+
+void WaveshareGame::render_present()
+  {
+    LCD_1IN3_Display(this->waveshare_image);
+  }

@@ -30,5 +30,6 @@ struct Yancey_Timer{
   uint32_t interval;
   void* userdata = nullptr;
   bool ready = false;
+  uint32_t count;
 };
 
