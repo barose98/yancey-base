@@ -8,6 +8,7 @@ class Yancey_shape2d{
 public:
   static constexpr double Y2PI = ( 4.0f * (acos(0.0f)) );
   Yancey_shape2d();
+  Yancey_shape2d(const Yancey_shape2d &s);
   virtual ~Yancey_shape2d();
   Yancey_shape2d(int id, bool solid, int sides, int radius, Yancey_Vector location);
   virtual std::vector<Yancey_Vector> get_polygon() const;

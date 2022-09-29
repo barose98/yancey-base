@@ -4,6 +4,16 @@ uint8_t r;
 uint8_t g;
 uint8_t b;
 uint8_t a = 0xff;
+
+uint16_t make_rgb565()
+{
+    uint16_t bl = (this->b >> 3) & 0x1f;
+    uint16_t gr = ((this->g >> 2) & 0x3f) << 5;
+    uint16_t re = ((this->r >> 3) & 0x1f) << 11;
+
+    return (uint16_t) (re | gr | bl);
+};
+
 };
 
 #define YANCEYCOLOR_Red  { 0xFF, 0x00, 0x00 }

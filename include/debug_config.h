@@ -24,7 +24,7 @@ public:
 
 #ifdef DEBUG
 #define log_i  std::cout
-#define log_line  std::cout <<  __FILE__ <<  std::endl
+#define log_line  std::cout <<  __FILE__ << ':' << __LINE__ <<  std::endl
 #define log_func  std::cout <<  __PRETTY_FUNCTION__ << std::endl
 #else
 static NullBuffer null_buffer;

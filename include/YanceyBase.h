@@ -7,6 +7,12 @@
 #include "YanceyShape.h"
 #include "colors_config.h"
 
+
+struct Yancey_Frame_Counter{
+  bool ready;
+  uint32_t count;
+};
+
 class GameBase{
 public:
   virtual bool init();

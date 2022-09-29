@@ -5,6 +5,8 @@
 
 
 Yancey_shape2d::Yancey_shape2d(){};
+Yancey_shape2d::Yancey_shape2d(const Yancey_shape2d &s):		\
+  id(s.id), solid(s.solid), sides(s.sides), radius(s.radius), location(s.location) {}
 Yancey_shape2d::~Yancey_shape2d(){};
 Yancey_shape2d::Yancey_shape2d(int id, bool solid, int sides, int radius, Yancey_Vector location): \
   id(id), solid(solid), sides(sides), radius(radius), location(location) {}
@@ -34,15 +36,19 @@ std::vector<Yancey_Vector> Yancey_circ::get_polygon() const
 
 std::vector<Yancey_Vector> Yancey_shape2d::get_polygon() const
 {
-    std::vector<Yancey_Vector> newp = {{this->location.x,this->location.y} };
+  std::vector<Yancey_Vector> points = {};//{this->location.x,this->location.y} };
+    
     for(float f= 0.0f; f < Yancey_shape2d::Y2PI; f+=Yancey_shape2d::Y2PI/this->sides)
 	  {
 	    float x =float(this->location.x + cosf(f)*this->radius );
 	    float y =float(this->location.y + sinf(f)*this->radius) ;
-	    newp.push_back( { x , y } );
+	    points.push_back( { x , y } );
 	    //	    log_i<< ( 4.0f * (acos(0.0f)) )  <<' '<< f <<' '<< x <<','<< y <<std::endl;
 	  }
-	return newp;
+    
+
+	return points;
+  
 }
 std::vector<Yancey_Vector> Yancey_rect::get_polygon() const
  {
