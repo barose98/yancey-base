@@ -15,14 +15,15 @@ struct Yancey_Frame_Counter{
 
 class GameBase{
 public:
+
+
+  
   virtual bool init();
   virtual void kill();
   virtual bool load();
   virtual bool update();
   virtual bool run();  
-  virtual bool handleEvents();
-  
-  //virtual bool draw_gl(float* points);
+  virtual bool handle_events();
 
 };
 template <class ID, class CB>

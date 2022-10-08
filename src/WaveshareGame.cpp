@@ -4,11 +4,6 @@
 #include <iostream>
 #include <chrono>
 //waveshare
-//#include "EPD_Test.h"
-//#include "DEV_Config.h"
-//#include "GUI_Paint.h"
-//#include "ImageData.h"
-//#include "Debug.h"
 #include <stdlib.h> // malloc() free()
 
 #include "Infrared.h"
@@ -111,18 +106,13 @@ void WaveshareGame::init_interrupts()
     gpio_set_irq_enabled_with_callback (WaveshareGame::KEY_Y, GPIO_IRQ_EDGE_FALL, true, WaveshareGame::irq_callb);
     
 }
-    
-bool WaveshareGame::load()
-{
-    return GameBase::load();
-}
 
 bool WaveshareGame::loop()
 {
   bool contin = true;
   while(contin){
      contin = this->update();
-     if(!this->handleEvents())return false;
+     if(!this->handle_events())return false;
   }
  return false;
  
@@ -140,7 +130,7 @@ bool WaveshareGame::run()
   return false;
 }
 
-bool WaveshareGame::handleEvents()
+bool WaveshareGame::handle_events()
 {
   
 

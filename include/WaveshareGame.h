@@ -10,23 +10,21 @@ extern "C"{
 #include "Infrared.h"
 }
   
-
 class WaveshareGame: public GameBase{
  public:
   WaveshareGame();
   WaveshareGame(int framerate);
    ~WaveshareGame();
   bool init(uint8_t flags);
-  bool init(uint8_t flags,  UWORD* &BlackImage);
+  bool init(uint8_t flags,  uint16_t* &BlackImage);
    void kill() override;
-   bool load() override;
    bool loop();
    bool run() override;
    bool update() override;
-   bool handleEvents() override ;
+  bool handle_events();
+  static void irq_callb(unsigned int gpio_pin, uint32_t events);
    virtual void init_interrupts();
 
-  //protected:
   void getWindowSize();
   virtual  bool draw_lines( std::vector<Yancey_Vector> points, Yancey_Color color );  
   static bool frame_expired(repeating_timer_t* t);
@@ -35,6 +33,7 @@ class WaveshareGame: public GameBase{
   void render_clear(Yancey_Color color);
   void rotate_image(uint32_t rot);
   void render_present();
+  
   void draw_num(Yancey_Vector tl, uint32_t num, uint8_t places, Yancey_Color fg, Yancey_Color bg);
   void draw_string(Yancey_Vector tl, const char* str,  Yancey_Color fg, Yancey_Color bg);
   
@@ -42,6 +41,10 @@ class WaveshareGame: public GameBase{
   UWORD* waveshare_image;
   repeating_timer_t *frame_timer;
   static Yancey_Frame_Counter frames;
+
+
+
+  
   
   const char* title;
   int wind_w;
@@ -59,6 +62,6 @@ class WaveshareGame: public GameBase{
   static const uint8_t RIGHT = 20;
   static const uint8_t CTRL = 3;
    
-  static void irq_callb(unsigned int gpio_pin, uint32_t events);
+
 
 };
