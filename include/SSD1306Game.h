@@ -5,17 +5,14 @@
 #include <stdint.h>
 #include <pico/stdlib.h>
 extern "C"{
-#include "LCD_1in3.h"
-#include "GUI_Paint.h"
-#include "fonts.h"
-#include "Infrared.h"
+#include "ssd1306.h"
 }
   
-class WaveshareGame: public PicoGame{
+class SSD1306Game: public PicoGame{
  public:
-   WaveshareGame();
-   WaveshareGame(int framerate);
-   ~WaveshareGame();
+   SSD1306Game();
+   SSD1306Game(int framerate);
+   ~SSD1306Game();
    bool init(uint8_t flags) override;
    bool init(uint8_t flags,  uint16_t* &BlackImage);
    void kill() override;
@@ -38,7 +35,7 @@ class WaveshareGame: public PicoGame{
   void rotate_image(uint8_t rot);
   void render_present(uint8_t rot);
   
-  UWORD* waveshare_image;  
+    ssd1306_t ssd1306disp;
   
   static const uint8_t KEY_A = 15; 
   static const uint8_t KEY_B = 17; 

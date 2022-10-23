@@ -14,19 +14,19 @@ struct Yancey_Frame_Counter{
 };
 
 class GameBase{
-public:
-
-
-  
+public:  
   virtual bool init();
   virtual void kill();
-  virtual bool load();
   virtual bool update();
   virtual bool run();  
   virtual bool handle_events();
 
 };
+/*
 template <class ID, class CB>
+
+ 
+
 struct Yancey_Timer{
   Yancey_Timer(){};
   Yancey_Timer(ID id, CB cb, uint32_t interval, void* userdata):
@@ -39,4 +39,4 @@ struct Yancey_Timer{
   bool ready = false;
   uint32_t count;
 };
-
+ */

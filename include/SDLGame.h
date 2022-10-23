@@ -13,7 +13,8 @@
 class SDLGame: public GameBase{
  public:
   SDLGame();
-  SDLGame(const char* title, int w, int h, uint32_t interval);
+  SDLGame(const char* title, int w, int h, uint32_t framerate );
+  SDLGame(uint32_t framerate );
    ~SDLGame();
 
   
@@ -27,15 +28,18 @@ class SDLGame: public GameBase{
 
  
   void getWindowSize();
-  virtual  bool draw_lines( std::vector<Yancey_Vector> points, Yancey_Color color );  
+  virtual  bool draw_lines( std::vector<Yancey_Vector> points );  
+  virtual  bool draw_points( std::vector<Yancey_Vector> points );  
   static uint32_t frame_expired(uint32_t interval, void *param);
   
   void set_render_color(Yancey_Color color);
   void render_clear(Yancey_Color color);
   
-  void render_present();
+  void render_present(uint8_t rot);
 
-
+void draw_num(Yancey_Vector tl, uint32_t num, uint8_t places, Yancey_Color fg, Yancey_Color bg);
+  void draw_string(Yancey_Vector tl, const char* str,  Yancey_Color fg, Yancey_Color bg);
+  
 
   
   SDL_TimerID frame_timer;

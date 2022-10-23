@@ -18,7 +18,7 @@ Yancey_rect::Yancey_rect(int id, bool solid, Yancey_Vector size, Yancey_Vector l
 {
   this->size = size;
   // this->radius = int( sqrt((w/2)*(w/2) + (h/2)*(h/2)) );
-  //  log_i<<this->radius<<std::endl;
+  // log_i<<this->radius<<std::endl;
 }
 
 Yancey_circ::Yancey_circ(){};
@@ -55,17 +55,17 @@ std::vector<Yancey_Vector> Yancey_rect::get_polygon() const
 
     std::vector<Yancey_Vector> newp = {};
 
-      Yancey_Vector tl= { this->location.x ,this->location.y};
-      Yancey_Vector tr= { this->location.x + this->size.x ,this->location.y };
+      Yancey_Vector tl= { this->location.x - this->size.x ,this->location.y - this->size.y};
+      Yancey_Vector tr= { this->location.x + this->size.x ,this->location.y - this->size.y};
       Yancey_Vector br= { this->location.x + this->size.x ,this->location.y + this->size.y};
-      Yancey_Vector bl= { this->location.x ,this->location.y + this->size.y};
+      Yancey_Vector bl= { this->location.x - this->size.x,this->location.y + this->size.y};
       
       newp.push_back( tl );
       newp.push_back( tr );
       newp.push_back( br );
       newp.push_back( bl );
       newp.push_back( tl );
-
+      //log_i
        return newp;      
 }
     

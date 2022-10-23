@@ -1,3 +1,4 @@
+#include "PicoGame.h"
 #include "WaveshareGame.h"
 #include "debug_config.h"
 #include "colors_config.h"
@@ -13,8 +14,6 @@ WaveshareGame::WaveshareGame(int framerate){
   this->wind_w=LCD_1IN3.WIDTH;
   this->wind_h=LCD_1IN3.HEIGHT;
   log_i<< framerate << " frames per second." << std::endl;
-  this->frame_timer = new repeating_timer_t;
-  add_repeating_timer_ms( (1000/framerate), WaveshareGame::frame_expired, this, this->frame_timer);
 
 }
 WaveshareGame::WaveshareGame(){
@@ -23,22 +22,7 @@ WaveshareGame::WaveshareGame(){
 WaveshareGame::~WaveshareGame()
 {
     log_func;
-    delete this->frame_timer;
-}
-Yancey_Frame_Counter WaveshareGame::frames = {false,0};
-
-bool WaveshareGame::frame_expired(repeating_timer_t* t)
-{
-  //  log_func;
-  // log_i<< (t->user_data == NULL) <<std::endl;
-   if(t->user_data != NULL)
-  {
-  WaveshareGame* th = (WaveshareGame*)t->user_data;
-      WaveshareGame::frames.ready  = true;
-      WaveshareGame::frames.count += 1;
-      return true;
-        }
-      //  return false;
+    delete PicoGame::frame_timer;
 }
 
 void WaveshareGame::irq_callb(unsigned int gpio_pin, uint32_t events)
@@ -52,8 +36,11 @@ void WaveshareGame::kill()
 // Quit
 }
 
-bool WaveshareGame::init(UBYTE scan_dir,  UWORD* &BlackImage)
+bool WaveshareGame::init(uint8_t scan_dir)
 {
+  PicoGame::init(0);
+  UWORD* &BlackImage = this->waveshare_image;
+
     log_i <<"Initializing Waveshare Window " <<  std::endl ;
     DEV_Delay_ms(100);
 
@@ -109,24 +96,21 @@ void WaveshareGame::init_interrupts()
 
 bool WaveshareGame::loop()
 {
+  
   bool contin = true;
-  while(contin){
-     contin = this->update();
-     if(!this->handle_events())return false;
+    this->frames.count = 0;
+  while(true){
+    if(!this->update())break;
+    if(!this->handle_events())break;
   }
- return false;
- 
+      this->kill();
+      return false;
 }
 
 bool WaveshareGame::run()
 {
   log_func;
-
-  if( !this->loop())
-    {
-      this->kill();
-      return false;
-    }
+  this->loop()
   return false;
 }
 
@@ -184,11 +168,12 @@ void WaveshareGame::getWindowSize()
     Paint_Clear(color.make_rgb565());
   }
 
-void WaveshareGame::render_present()
+void WaveshareGame::render_present(uint8_t rot)
   {
+    Paint_SetRotate(UWORD(rot));
     LCD_1IN3_Display(this->waveshare_image);
   }
-  void WaveshareGame::rotate_image(uint32_t rot)
+  void WaveshareGame::rotate_image(uint8_t rot)
   {
     Paint_SetRotate(UWORD(rot));
   }

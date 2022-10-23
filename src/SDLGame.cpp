@@ -11,7 +11,15 @@ SDLGame::SDLGame(const char* title, int w, int h, uint32_t framerate){
   this->title = title;
   this->wind_w = w;
   this->wind_h = h;
-  this->frame_timer = SDL_AddTimer((100/framerate), SDLGame::frame_expired, this);
+  this->frame_timer = SDL_AddTimer((1000/framerate), SDLGame::frame_expired, this);
+
+}
+SDLGame::SDLGame( uint32_t framerate){
+  log_func;
+  this->title = "SDL Game";
+  this->wind_w = 480;
+  this->wind_h = 480;
+  this->frame_timer = SDL_AddTimer((1000/framerate), SDLGame::frame_expired, this);
 
 }
 SDLGame::SDLGame(){
@@ -26,13 +34,10 @@ Yancey_Frame_Counter SDLGame::frames = {false,0};
 
 uint32_t SDLGame::frame_expired(uint32_t interval, void *param)
 {
-  if(param)
-  {
-      SDLGame* th = (SDLGame*)param;
-      th->frames.ready  = true;
-      return th->frame_timer->interval;
-  }
-  return interval;
+  SDLGame::frames.count += 1;
+  SDLGame::frames.ready  = true;
+      return interval;
+
 }
 
 void SDLGame::kill()
@@ -60,7 +65,7 @@ bool SDLGame::init(uint32_t flags)
 	  log_i <<"error:" << SDL_GetError() << std::endl ;
        return false;
        }
-    this->window = SDL_CreateWindow(  this->title, SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,this->wind_w, this->wind_h, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+    this->window = SDL_CreateWindow(  this->title, SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,this->wind_w, this->wind_h,  SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
     if( !this->window ){
 	  log_i << "error:" << SDL_GetError() << std::endl ;
 	  return false;
@@ -85,25 +90,21 @@ bool SDLGame::init(uint32_t flags)
 bool SDLGame::loop()
 {
   bool contin = true;
-    this->frame_timer->count = 0;
-  while(contin){
-     contin = this->update();
-     if(!this->handle_events())return false;
+    this->frames.count = 0;
+  while(true){
+    if(!this->update())break;
+    if(!this->handle_events())break;
   }
- return false;
- 
+      this->kill();
+      return false;
 }
 
 bool SDLGame::run()
 {
   log_func;
-
-  if( !this->loop())
-    {
-      this->kill();
-      return false;
-    }
+  this->loop();
   return false;
+    
 }
 
 bool SDLGame::handle_events()
@@ -128,21 +129,31 @@ bool SDLGame::update(){
   return true;
 }
 
-bool SDLGame::draw_lines(std::vector<Yancey_Vector> points, Yancey_Color color )
+bool SDLGame::draw_points(std::vector<Yancey_Vector> points)
+{
+  uint8_t suc;
+  for(Yancey_Vector p : points)
+    {
+      //      log_i<<p.x<<','<<p.y<<std::endl;
+      suc=SDL_RenderDrawPoint( this->renderer, p.x, p.y);
+    }
+  if(suc)
+    log_i<<SDL_GetError()<<std::endl;
+  return true;
+}
+bool SDLGame::draw_lines(std::vector<Yancey_Vector> points)
 {
   
   //  log_i<< points.size() <<std::endl;
   std::vector<SDL_Point> newp = {};
   int i =0;
   for( Yancey_Vector yp : points ){
-    //    Yancey_Vector n = MKS2PX(yp ,  this->wind_size_mks);
     //    log_line;
     newp.push_back(  { round(yp.x),round(yp.y) } );
-    // log_i<<  this->wind_size_mks.x <<','<<  this->wind_size_mks.y <<' ';
     // log_i<< yp.x <<','<< yp.y <<std::endl;
     i++;
   }
-    this->set_render_color(color);
+  // SDL_RenderDrawPoint(
     SDL_RenderDrawLines( this->renderer, newp.data(), newp.size()  );
     return SDL_TRUE;
 }
@@ -165,7 +176,18 @@ void SDLGame::getWindowSize()
     this->set_render_color(color);
     SDL_RenderClear(this->renderer);
   }
-void SDLGame::render_present()
+void SDLGame::render_present(uint8_t rot)
   {
     SDL_RenderPresent(this->renderer);
+  }
+
+
+  void SDLGame::draw_num(Yancey_Vector tl, uint32_t num, uint8_t places, Yancey_Color fg, Yancey_Color bg)
+  {
+   
+
+  }
+  void SDLGame::draw_string(Yancey_Vector tl, const char* str, Yancey_Color fg, Yancey_Color bg)
+  {
+    
   }
