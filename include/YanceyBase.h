@@ -11,6 +11,7 @@
 struct Yancey_Frame_Counter{
   bool ready;
   uint32_t count;
+  uint32_t framerate;
 };
 
 class GameBase{

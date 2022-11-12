@@ -11,6 +11,7 @@ SDLGame::SDLGame(const char* title, int w, int h, uint32_t framerate){
   this->title = title;
   this->wind_w = w;
   this->wind_h = h;
+  SDLGame::frames.framerate =framerate;
   this->frame_timer = SDL_AddTimer((1000/framerate), SDLGame::frame_expired, this);
 
 }
@@ -19,6 +20,7 @@ SDLGame::SDLGame( uint32_t framerate){
   this->title = "SDL Game";
   this->wind_w = 480;
   this->wind_h = 480;
+    SDLGame::frames.framerate =framerate;
   this->frame_timer = SDL_AddTimer((1000/framerate), SDLGame::frame_expired, this);
 
 }
@@ -36,7 +38,7 @@ uint32_t SDLGame::frame_expired(uint32_t interval, void *param)
 {
   SDLGame::frames.count += 1;
   SDLGame::frames.ready  = true;
-      return interval;
+      return 1000 / SDLGame::frames.framerate;
 
 }
 
@@ -72,7 +74,7 @@ bool SDLGame::init(uint32_t flags)
     }
     this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
     //    this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_SOFTWARE);
-
+TTF_Init();
     /* Creating OpenGL Context */
     this->gl_context = SDL_GL_CreateContext(window);
     
@@ -128,7 +130,13 @@ bool SDLGame::update(){
    SDL_Delay(50);
   return true;
 }
-
+bool SDLGame::draw_rectangle(Yancey_Vector tl, int w, int h)
+{
+  SDL_Rect rect = {int(tl.x), int(tl.y), w, h};
+  uint8_t suc=SDL_RenderDrawRect(this->renderer, &rect);
+  return (suc == 0);
+}
+    
 bool SDLGame::draw_points(std::vector<Yancey_Vector> points)
 {
   uint8_t suc;

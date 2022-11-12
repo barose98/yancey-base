@@ -26,7 +26,8 @@ class  PicoGame  {
 
 
    virtual void getWindowSize() = 0;
-  virtual  bool draw_lines( std::vector<Yancey_Vector> points, Yancey_Color color ) = 0; 
+  virtual  bool draw_lines( std::vector<Yancey_Vector> points ) = 0; 
+  virtual  bool draw_pixels( std::vector<Yancey_Vector> points ) = 0; 
   virtual void draw_num(Yancey_Vector tl, uint32_t num, uint8_t places, Yancey_Color fg, Yancey_Color bg) = 0;
   virtual void draw_string(Yancey_Vector tl, const char* str,  Yancey_Color fg, Yancey_Color bg) = 0;
   

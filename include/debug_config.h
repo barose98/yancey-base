@@ -24,13 +24,14 @@ public:
 
 #ifdef DEBUG
 #define log_i  std::cout
+#define log_l log_i<<std::endl
 #define log_line  std::cout <<  __FILE__ << ':' << __LINE__ <<  std::endl
 #define log_func  std::cout <<  __PRETTY_FUNCTION__ << std::endl
 #else
 static NullBuffer null_buffer;
 static std::ostream null_stream(&null_buffer);
 #define log_i null_stream
+#define log_l 
 #define log_func
 #define log_line
 #endif
-
