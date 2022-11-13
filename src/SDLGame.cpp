@@ -190,11 +190,6 @@ void SDLGame::render_present(uint8_t rot)
   }
 
 
-  void SDLGame::draw_num(Yancey_Vector tl, uint32_t num, uint8_t places, Yancey_Color fg, Yancey_Color bg)
-  {
-   
-
-  }
   void SDLGame::draw_string(Yancey_Vector tl, const char* str, Yancey_Color fg, Yancey_Color bg)
   {
     

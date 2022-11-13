@@ -2,6 +2,11 @@
 #include "YanceyVector.h"
 //
 
+std::ostream& operator <<(std::ostream &out, const Yancey_Vector &v)
+  {
+    out << v.x<< ","<< v.y;
+    return out;
+  }
 
   float Yancey_Vector::get_magnitude()
   {
@@ -97,12 +102,5 @@ void Yancey_Vector::operator /=(float scalar)
   {
   this->x /= scalar;
   this->y /= scalar;
-  }
-
-
-std::ostream& operator <<(std::ostream &out, const Yancey_Vector &v)
-  {
-    out << v.x<< ", "<< v.y;
-    return out;
   }
 

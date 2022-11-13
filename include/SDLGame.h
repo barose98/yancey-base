@@ -18,7 +18,7 @@ class SDLGame: public GameBase{
    ~SDLGame();
 
   
-  bool init(uint32_t flags);
+   virtual bool init(uint32_t flags);
   
    void kill() override;
    bool loop();
@@ -35,11 +35,9 @@ class SDLGame: public GameBase{
   
   void set_render_color(Yancey_Color color);
   void render_clear(Yancey_Color color);
-  
   void render_present(uint8_t rot);
 
-void draw_num(Yancey_Vector tl, uint32_t num, uint8_t places, Yancey_Color fg, Yancey_Color bg);
-void draw_string(Yancey_Vector tl, const char* str,  Yancey_Color fg, Yancey_Color bg);
+  void draw_string(Yancey_Vector tl, const char* str,  Yancey_Color fg, Yancey_Color bg);
   
 
   
