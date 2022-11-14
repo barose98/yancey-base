@@ -1,6 +1,5 @@
 #include "YanceyBase.h"
 
-#include <iostream>
 #include "debug_config.h"
 
 
@@ -20,11 +19,12 @@ void GameBase::draw_num(Yancey_Vector br, Yancey_Vector digitsize,  uint32_t num
       {
 	if(ys.illum)
 	  {
-	      std::vector<Yancey_Vector> p =  ys.get_points();
-	      for(Yancey_Vector &v : p){
-		v += yd.location;
-	      }	      
-	      this->draw_lines(p);
+	    std::vector<std::vector<Yancey_Vector>> p =  ys.get_points();
+	    std::for_each(p.begin(),p.end(),[this,&yd](std::vector<Yancey_Vector> &vp){
+						vp[0] += yd.location;
+						vp[1] += yd.location;
+						this->draw_lines(vp);
+					      });  
 	  }
       }
     

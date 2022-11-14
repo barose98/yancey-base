@@ -14,7 +14,7 @@ public:
   Yancey_Segment(Yancey_Vector loc, Yancey_Vector sz, bool illum);
    ~Yancey_Segment();
   Yancey_Segment(const Yancey_Segment& s);
-  std::vector<Yancey_Vector> get_points();
+  std::vector<std::vector<Yancey_Vector>> get_points();
   void rotate();
 };
 

@@ -62,23 +62,32 @@ Yancey_Segment::Yancey_Segment(Yancey_Vector loc, Yancey_Vector ssz, bool illum)
   this->illum = illum;
   //log_i<<"ill "<<this->illum<<" sloc "<<this->location<<std::endl;
 }
-std::vector<Yancey_Vector> Yancey_Segment::get_points()
+std::vector<std::vector<Yancey_Vector>> Yancey_Segment::get_points()
 {
-  std::vector<Yancey_Vector> points = {};
-  //log_i<<"sloc "<<this->location<<std::endl;
-  //  log_i<<"ssz "<<this->size<<std::endl;
-  points.push_back({this->size.x * .75,0});
-  points.push_back({this->size.x * .5,this->size.y/2});
-  points.push_back({this->size.x * -.5,this->size.y/2});
-  points.push_back({this->size.x * -.75,0});
-
-  points.push_back({this->size.x * -.5,this->size.y/-2});
-  points.push_back({this->size.x * .5,this->size.y/-2});
-    points.push_back({this->size.x * .75,0});
-      for(Yancey_Vector &p : points){
-	  if(this->rot)p = p.get_normal(true);
-	p += this->location;
-      
+  std::vector<std::vector<Yancey_Vector>> points = {};
+  float hy = this->size.y/2;
+  float y = 0.0;
+  int8_t yinc = 1;
+  float xextent = this->size.x * 0.85;
+  for(int x = xextent;x > (0- xextent);x--)
+    {
+      Yancey_Vector p1,p2;
+      if(x > xextent - hy || x < (0 - xextent)+hy){
+	y += yinc;
+	 p1 = {x,y};
+	 p2 = {x,0- y};
+      }else{
+	yinc = -1;
+	p1 = {x,hy};
+	p2 = {x,0- hy};
+      }
+      if(this->rot){
+	p1 = p1.get_normal(true);
+	p2 = p2.get_normal(true);
+      }
+      p1 += this->location;
+      p2 += this->location; 
+	points.push_back({p1,p2});
     }
   //log_l;
   return points;

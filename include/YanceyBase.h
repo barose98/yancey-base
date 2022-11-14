@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
-
+#include <algorithm>
+#include <iostream>
 #include <stdint.h>
 #include <math.h>
 #include "YanceyVector.h"
