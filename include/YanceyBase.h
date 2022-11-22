@@ -16,7 +16,7 @@ struct Yancey_Frame_Counter{
   uint32_t framerate;
 };
 
-class GameBase{
+class YanceyBase{
 public:  
   virtual bool init()=0;
   virtual void kill()=0;
@@ -31,9 +31,9 @@ public:
   virtual  void set_render_color(Yancey_Color color)=0;
   virtual  void render_clear(Yancey_Color color)=0;
   virtual  void render_present(uint8_t rot)=0;
-
-  virtual  void draw_num(Yancey_Vector br, Yancey_Vector size, uint32_t num, uint8_t places, Yancey_Color fg, Yancey_Color bg);
-  virtual  void draw_string(Yancey_Vector tl, const char* str,  Yancey_Color fg, Yancey_Color bg)=0;
+  virtual void debug_loc(Yancey_Vector loc);
+  virtual  void draw_num(Yancey_Vector br, Yancey_Vector size, uint32_t num, uint8_t places, bool fillsegs);
+  virtual  void draw_string(Yancey_Vector loc, const char* str);
   
 };
 /*

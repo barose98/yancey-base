@@ -73,6 +73,8 @@ std::vector<Yancey_Vector> Yancey_rect::get_polygon() const
     
 bool Yancey_rect::collides_with(Yancey_rect other, Yancey_Vector &overlap)
 {
+  /*
+ 
     Yancey_Vector ttl = this->location - (this->size / 2);
     Yancey_Vector ttr = {this->location.x + this->size.x / 2 , this->location.y - this->size.y /2};
     Yancey_Vector tbr = this->location + (this->size / 2);
@@ -87,16 +89,14 @@ bool Yancey_rect::collides_with(Yancey_rect other, Yancey_Vector &overlap)
     //bool ret4 = (ttr.y > obl.y);
     //  log_i<< ret1<<' '<<ret2 <<std::endl;
     overlap = ttl - obr;
-    return (ret1 && ret2);
+    //return (ret1 && ret2);
+
+   */
+    return  this->getTopLeft() < other.getBottomRight() && this->getBottomRight() > other.getTopLeft();
 }
 bool Yancey_rect::collides_with(Yancey_Vector v)
 {
-    Yancey_Vector tl = this->location - (this->size / 2);
-    Yancey_Vector br = this->location + (this->size / 2);
-    bool ret = (v.y >= tl.y && v.y <= br.y && v.x >= tl.x && v.x <= br.x) ;
-
-    //    log_i<< ret <<std::endl;
-    return ret;
+  return v > this->getTopLeft() && v < this->getBottomRight();
 }
 bool Yancey_shape2d::collides_with(Yancey_Vector &other)
 {
@@ -111,3 +111,11 @@ bool Yancey_shape2d::collides_with(Yancey_shape2d &other)
         //log_i<< this->location.get_dist(other.location) <<" < "<< this->radius + other.radius <<std::endl;
     return this->location.get_dist(other.location) < (this->radius + other.radius);
   }
+Yancey_Vector Yancey_rect::getBottomRight()
+{
+return this->location + (this->size / 2);
+}
+Yancey_Vector Yancey_rect::getTopLeft()
+{
+return this->location - (this->size / 2);
+}

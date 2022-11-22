@@ -158,7 +158,6 @@ bool SDLGame::draw_lines(std::vector<Yancey_Vector> points)
   for( Yancey_Vector yp : points ){
     //    log_line;
     newp.push_back(  { round(yp.x),round(yp.y) } );
-    // log_i<< yp.x <<','<< yp.y <<std::endl;
     i++;
   }
   // SDL_RenderDrawPoint(
@@ -169,8 +168,6 @@ bool SDLGame::draw_lines(std::vector<Yancey_Vector> points)
 void SDLGame::getWindowSize()
 {
     SDL_GetWindowSize(this->window,&this->wind_w,&this->wind_h);
-    //   this->wind_size_mks = PX2MKS(this->wind_w , this->wind_h)  ;
-    //log_i<< this->wind_w_mks <<','<< this->wind_h_mks << std::endl;
 }
 
   void SDLGame::set_render_color(Yancey_Color color)
@@ -190,7 +187,4 @@ void SDLGame::render_present(uint8_t rot)
   }
 
 
-  void SDLGame::draw_string(Yancey_Vector tl, const char* str, Yancey_Color fg, Yancey_Color bg)
-  {
-    
-  }
+  

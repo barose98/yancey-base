@@ -29,6 +29,8 @@ public:
   std::vector<Yancey_Vector> get_polygon() const override;
   virtual bool collides_with(Yancey_rect other, Yancey_Vector &overlap);
   virtual bool collides_with(Yancey_Vector v);
+  virtual Yancey_Vector getBottomRight();
+  Yancey_Vector getTopLeft();
   Yancey_Vector size;
 };
 

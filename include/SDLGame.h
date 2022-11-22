@@ -10,7 +10,7 @@
 
 
 
-class SDLGame: public GameBase{
+class SDLGame: public YanceyBase{
  public:
   SDLGame();
   SDLGame(const char* title, int w, int h, uint32_t framerate );
@@ -37,9 +37,7 @@ class SDLGame: public GameBase{
   void render_clear(Yancey_Color color);
   void render_present(uint8_t rot);
 
-  void draw_string(Yancey_Vector tl, const char* str,  Yancey_Color fg, Yancey_Color bg);
   
-
   
   SDL_TimerID frame_timer;
   static Yancey_Frame_Counter frames;

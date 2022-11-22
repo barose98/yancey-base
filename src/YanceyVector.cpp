@@ -4,7 +4,7 @@
 
 std::ostream& operator <<(std::ostream &out, const Yancey_Vector &v)
   {
-    out << v.x<< ","<< v.y;
+    out <<'{'<< v.x<< ','<< v.y <<'}';
     return out;
   }
 

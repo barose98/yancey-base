@@ -67,3 +67,4 @@ uint16_t make_rgb565()
 #define YANCEYCOLOR_Black  { 0x00, 0x00, 0x00 }
 #define YANCEYCOLOR_White  { 0xFF, 0xFF, 0xFF }
 #define YANCEYCOLOR_Transparent  { 0x00, 0x00, 0x00 }
+#define DEBUGCOLOR YANCEYCOLOR_Red
